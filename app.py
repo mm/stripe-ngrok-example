@@ -10,10 +10,8 @@ def receive_stripe_webhook():
     
     # Try to parse a webhook payload, get upset if we couldn't
     # parse any JSON in the body:
-    stripe_payload = None
-    try:
-        stripe_payload = request.json
-    except Exception:
+    stripe_payload = request.json
+    if not stripe_payload:
         return jsonify(message="Could not parse webhook payload"), 400
 
     event = stripe_payload.get('type')
